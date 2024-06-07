@@ -4,11 +4,14 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
 import org.springframework.data.jdbc.core.convert.*;
 import org.springframework.data.jdbc.core.mapping.JdbcMappingContext;
 import org.springframework.data.relational.core.dialect.Dialect;
+import org.springframework.data.relational.core.mapping.RelationalMappingContext;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
@@ -64,4 +67,13 @@ public class BarConfig {
 
         return factory.create();
     }
+
+    @Bean
+    public JdbcAggregateTemplate barJdbcAggregateTemplate(ApplicationContext publisher,
+                                                          RelationalMappingContext context,
+                                                          JdbcConverter converter,
+                                                          @Qualifier("barDataAccessStrategy") DataAccessStrategy dataAccessStrategy) {
+        return new JdbcAggregateTemplate(publisher, context, converter, dataAccessStrategy);
+    }
+
 }
