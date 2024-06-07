@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: multiplesource-repository-app
+  datasource:
+    foo:
+      username: admin
+      password: password
+      url: jdbc:postgresql://127.0.0.1:5432/foo
+      driver-class-name: org.postgresql.Driver
+    bar:
+      username: admin
+      password: password
+      url: jdbc:postgresql://127.0.0.1:5433/bar
+      driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: false
+  docker:
+    compose:
+      enabled: true

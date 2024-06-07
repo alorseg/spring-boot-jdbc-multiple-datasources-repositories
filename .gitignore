@@ -1,0 +1,89 @@
+# Java & Maven specific ignores
+target/
+!.mvn/wrapper/maven-wrapper.jar
+**/pom.xml.tag
+**/pom.xml.releaseBackup
+**/pom.xml.versionsBackup
+**/pom.xml.next
+**/release.properties
+**/dependency-reduced-pom.xml
+**/buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+
+# Eclipse specific ignores
+.metadata
+.classpath
+.project
+.settings/
+
+# IntelliJ IDEA specific ignores
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# NetBeans specific ignores
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# VS Code specific ignores
+.vscode/
+
+# OS specific ignores
+.DS_Store
+Thumbs.db
+
+# Log files
+logs
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+*.swp
+
+# Spring Boot specific ignores
+# Local environment variable files
+.env
+.env.local
+.env.*.local
+.local.env
+
+# Dependency directories
+node_modules/
+bower_components/
+
+# System files
+*.DS_Store
+*.class
+
+# Gradle specific ignores
+.gradle/
+build/
+!gradle-wrapper.jar
+.gradle-cache/
+
+# Package Files #
+*.war
+*.ear
+
+# Heroku specific ignores
+Procfile
+
+# Other generated files
+*.jar
+*.war
+*.ear
+
+# Windows specific ignores
+Thumbs.db
+ehthumbs.db

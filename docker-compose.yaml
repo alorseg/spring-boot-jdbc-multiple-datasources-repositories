@@ -1,0 +1,28 @@
+services:
+  foo:
+    image: 'postgres:15-alpine'
+    container_name: foo-postgres
+    ports:
+      - '127.0.0.1:5432:5432'
+    environment:
+      POSTGRES_DB: foo
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    volumes:
+      - foo-data:/var/lib/postgresql/data
+  bar:
+    image: 'postgres:15-alpine'
+    container_name: bar-postgres
+    ports:
+      - '127.0.0.1:5433:5432'
+    environment:
+      POSTGRES_DB: bar
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    volumes:
+      - bar-data:/var/lib/postgresql/data
+volumes:
+  foo-data:
+    driver: local
+  bar-data:
+    driver: local
