@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS user_grades (
+    grade_id SERIAL PRIMARY KEY,
+    grade_name VARCHAR(50) UNIQUE NOT NULL
+);

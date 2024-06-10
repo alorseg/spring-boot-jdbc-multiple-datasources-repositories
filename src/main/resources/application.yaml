@@ -1,6 +1,7 @@
 spring:
   application:
     name: multiplesource-repository-app
+    print-bean-list: false
   datasource:
     foo:
       username: admin

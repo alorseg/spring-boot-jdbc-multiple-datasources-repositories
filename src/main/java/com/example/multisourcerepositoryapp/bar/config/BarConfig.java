@@ -1,15 +1,17 @@
-package com.example.multisourcerepositoryapp.config;
+package com.example.multisourcerepositoryapp.bar.config;
 
 import com.zaxxer.hikari.HikariDataSource;
+import jakarta.annotation.PostConstruct;
+import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
 import org.springframework.data.jdbc.core.convert.*;
 import org.springframework.data.jdbc.core.mapping.JdbcMappingContext;
+import org.springframework.data.jdbc.repository.support.JdbcRepositoryFactory;
 import org.springframework.data.relational.core.dialect.Dialect;
 import org.springframework.data.relational.core.mapping.RelationalMappingContext;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
@@ -69,11 +71,40 @@ public class BarConfig {
     }
 
     @Bean
-    public JdbcAggregateTemplate barJdbcAggregateTemplate(ApplicationContext publisher,
-                                                          RelationalMappingContext context,
-                                                          JdbcConverter converter,
-                                                          @Qualifier("barDataAccessStrategy") DataAccessStrategy dataAccessStrategy) {
-        return new JdbcAggregateTemplate(publisher, context, converter, dataAccessStrategy);
+    public JdbcRepositoryFactory barJdbcRepositoryFactory(
+            @Qualifier("barDataAccessStrategy") DataAccessStrategy dataAccessStrategy,
+            RelationalMappingContext context,
+            JdbcConverter converter,
+            Dialect dialect,
+            ApplicationEventPublisher publisher,
+            @Qualifier("barNamedParameterJdbcTemplate") NamedParameterJdbcTemplate ldapNamedParameterJdbcTemplate) {
+
+        return new JdbcRepositoryFactory(
+                dataAccessStrategy,
+                context,
+                converter,
+                dialect,
+                publisher,
+                ldapNamedParameterJdbcTemplate);
+    }
+
+    @Configuration
+    public static class BarFlywayConfig {
+        private final DataSource barDataSource;
+
+        public BarFlywayConfig(@Qualifier("barDataSource") DataSource dataSource) {
+            this.barDataSource = dataSource;
+        }
+
+        @PostConstruct
+        public void runMigration() {
+            Flyway.configure()
+                    .dataSource(barDataSource)
+                    .locations("db/migration/bar")
+                    .baselineOnMigrate(true)
+                    .load()
+                    .migrate();
+        }
     }
 
 }

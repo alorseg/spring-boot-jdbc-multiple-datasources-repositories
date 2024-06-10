@@ -1,6 +1,6 @@
-package com.example.multisourcerepositoryapp.repository;
+package com.example.multisourcerepositoryapp.foo.repo;
 
-import com.example.multisourcerepositoryapp.entity.FooEntity;
+import com.example.multisourcerepositoryapp.foo.entity.FooEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

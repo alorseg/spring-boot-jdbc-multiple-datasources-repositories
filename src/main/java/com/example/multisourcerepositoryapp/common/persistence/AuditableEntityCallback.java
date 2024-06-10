@@ -1,4 +1,4 @@
-package com.example.multisourcerepositoryapp.persistence;
+package com.example.multisourcerepositoryapp.common.persistence;
 
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.relational.core.conversion.MutableAggregateChange;
