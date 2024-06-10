@@ -1,5 +1,6 @@
 package com.example.multisourcerepositoryapp.bar.entity;
 
+import com.example.multisourcerepositoryapp.common.persistence.Aggregate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,8 +13,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @NoArgsConstructor
 @Table(name = "user_grades")
 @EqualsAndHashCode(callSuper = false)
-public class BarEntity {
-    @Id
-    private Integer grade_id;
+public class BarEntity extends Aggregate {
+    private @Id Integer grade_id;
     private String grade_name;
 }

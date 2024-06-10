@@ -6,9 +6,11 @@ import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
 import org.springframework.data.jdbc.core.convert.*;
 import org.springframework.data.jdbc.core.mapping.JdbcMappingContext;
 import org.springframework.data.jdbc.repository.support.JdbcRepositoryFactory;
@@ -86,6 +88,16 @@ public class BarConfig {
                 dialect,
                 publisher,
                 ldapNamedParameterJdbcTemplate);
+    }
+
+    @Bean
+    public JdbcAggregateTemplate barJdbcAggregateTemplate(
+            ApplicationContext publisher,
+            RelationalMappingContext context,
+            JdbcConverter converter,
+            @Qualifier("barDataAccessStrategy")
+            DataAccessStrategy dataAccessStrategy) {
+        return new JdbcAggregateTemplate(publisher, context, converter, dataAccessStrategy);
     }
 
     @Configuration
